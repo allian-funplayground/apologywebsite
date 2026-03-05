@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>I'm Sorry, Baby</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --rose: #c9727a;
+      --cream: #fdf6f0;
+      --deep: #3b1f22;
+      --soft: #8c5a5e;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--cream);
+      font-family: 'Lato', sans-serif;
+      color: var(--deep);
+      overflow-x: hidden;
+    }
+
+    .petals {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden;
+    }
+    .petal {
+      position: absolute;
+      top: -60px;
+      background: radial-gradient(ellipse at 40% 30%, #f7c5c8, #e8949a);
+      border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%;
+      opacity: 0;
+      animation: fall linear infinite;
+    }
+    @keyframes fall {
+      0%   { transform: translateY(0) rotate(0deg) translateX(0); opacity: 0; }
+      5%   { opacity: 0.7; }
+      90%  { opacity: 0.4; }
+      100% { transform: translateY(110vh) rotate(360deg) translateX(40px); opacity: 0; }
+    }
+
+    .hero {
+      position: relative; z-index: 1;
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 3rem 2rem;
+      background: radial-gradient(ellipse at 50% 0%, #f9e8e8 0%, var(--cream) 70%);
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23c9727a' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      z-index: -1;
+    }
+
+    .heart-wrap {
+      margin-bottom: 2.5rem;
+      animation: heartbeat 2.2s ease-in-out infinite;
+    }
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      14%  { transform: scale(1.15); }
+      28%  { transform: scale(1); }
+      42%  { transform: scale(1.1); }
+      56%  { transform: scale(1); }
+    }
+    .heart-wrap svg { width: 80px; height: 80px; }
+
+    .eyebrow {
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
+      font-size: 0.75rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--rose);
+      margin-bottom: 1rem;
+      opacity: 0;
+      animation: fadeUp 1s 0.3s forwards;
+    }
+
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(3.5rem, 10vw, 7rem);
+      line-height: 1.05;
+      color: var(--deep);
+      opacity: 0;
+      animation: fadeUp 1s 0.6s forwards;
+    }
+    h1 em { font-style: italic; color: var(--rose); }
+
+    .subtitle {
+      margin-top: 1.5rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(1.1rem, 3vw, 1.5rem);
+      color: var(--soft);
+      max-width: 480px;
+      line-height: 1.6;
+      opacity: 0;
+      animation: fadeUp 1s 0.9s forwards;
+    }
+
+    .scroll-hint {
+      margin-top: 3.5rem;
+      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+      opacity: 0;
+      animation: fadeUp 1s 1.4s forwards;
+      color: var(--soft);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+    .scroll-hint .line {
+      width: 1px; height: 50px;
+      background: linear-gradient(to bottom, var(--rose), transparent);
+      animation: lineDrop 2s 1.6s ease-in-out infinite;
+    }
+    @keyframes lineDrop {
+      0%, 100% { transform: scaleY(1); opacity: 1; }
+      50% { transform: scaleY(0.5); opacity: 0.3; }
+    }
+
+    section {
+      position: relative; z-index: 1;
+      padding: 6rem 2rem;
+      max-width: 780px;
+      margin: 0 auto;
+    }
+
+    .divider {
+      display: flex; align-items: center; gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+    .divider span { flex: 1; height: 1px; background: #e2c4c6; }
+    .divider svg { width: 20px; height: 20px; flex-shrink: 0; }
+
+    .card {
+      background: #fff;
+      border: 1px solid #f0dada;
+      border-radius: 4px;
+      padding: 3rem 3.5rem;
+      box-shadow: 0 8px 40px rgba(180,100,110,0.07);
+      position: relative;
+      overflow: hidden;
+    }
+    .card::before {
+      content: '\201C';
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 10rem;
+      color: #f9e8e8;
+      position: absolute;
+      top: -1.5rem; left: 1.5rem;
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .card p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.15rem, 2.5vw, 1.4rem);
+      line-height: 1.9;
+      color: var(--deep);
+      position: relative; z-index: 1;
+    }
+    .card p + p { margin-top: 1.5rem; }
+
+    .promises-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(1.8rem, 5vw, 2.8rem);
+      color: var(--deep);
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    .promises-title em { color: var(--rose); font-style: italic; }
+
+    .promise-list { display: grid; gap: 1.2rem; }
+
+    .promise-item {
+      display: flex; align-items: flex-start; gap: 1.2rem;
+      background: #fff;
+      border: 1px solid #f0dada;
+      border-radius: 4px;
+      padding: 1.4rem 1.8rem;
+      box-shadow: 0 2px 12px rgba(180,100,110,0.05);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .promise-item.visible { opacity: 1; transform: translateY(0); }
+
+    .promise-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 300;
+      color: #e8b4b8;
+      line-height: 1;
+      flex-shrink: 0;
+      min-width: 2rem;
+    }
+    .promise-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      line-height: 1.7;
+      color: var(--deep);
+      padding-top: 0.2rem;
+    }
+
+    .closing {
+      text-align: center;
+      padding: 6rem 2rem 8rem;
+      position: relative; z-index: 1;
+    }
+    .closing h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-style: italic;
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      color: var(--deep);
+      line-height: 1.3;
+      margin-bottom: 1.5rem;
+    }
+    .closing h2 em { color: var(--rose); font-style: normal; }
+    .closing p {
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
+      font-size: 0.9rem;
+      letter-spacing: 0.12em;
+      color: var(--soft);
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      .card { padding: 2rem 1.8rem; }
+      section { padding: 4rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="petals" id="petals"></div>
+
+<div class="hero">
+  <div class="heart-wrap">
+    <svg viewBox="0 0 100 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M50 85 C50 85 5 55 5 28 C5 13 18 3 33 8 C40 10 46 15 50 20 C54 15 60 10 67 8 C82 3 95 13 95 28 C95 55 50 85 50 85Z"
+        fill="#e8949a" stroke="#c9727a" stroke-width="1.5"/>
+    </svg>
+  </div>
+  <p class="eyebrow">from the bottom of my heart</p>
+  <h1>I'm sorry,<br><em>baby.</em></h1>
+  <p class="subtitle">Please know that this comes from a place of love, honesty, and a heart that never wants to lose you.</p>
+  <div class="scroll-hint">
+    <span>read on</span>
+    <div class="line"></div>
+  </div>
+</div>
+
+<section>
+  <div class="divider">
+    <span></span>
+    <svg viewBox="0 0 24 24" fill="#e8b4b8"><path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/></svg>
+    <span></span>
+  </div>
+
+  <div class="card">
+    <p>Hi baby. I know that we have something going on right now because of what happened earlier and because of something stupid that I did. I just want to explain first what happened from my side. When you called, all I remember was saying hi and nodding while falling asleep. I was really sleepy and half awake lang. I remember raising my voice a little when I said na nagbuhat ko ganiha because I was still super drowsy, then the next thing I remember was the call ending.</p>
+    <p>But when we talked after, I realized I did something worse that I don't even remember doing. You said I murmured "samok" or "saba," maybe both. I honestly don't know if it came out because I was half asleep or because it was noisy earlier, but that still doesn't change the fact that you heard it and that it hurt you. And for that, I'm really sorry baby. The last thing I would ever want is to hurt you or make you feel like you're annoying to me.</p>
+    <p>I've been replaying everything in my head since it happened because it's bothering me that I hurt you like that. Even if I don't clearly remember saying it, I still take responsibility for it because it came from me. Please know that I would never intentionally disrespect you or talk to you that way.</p>
+  </div>
+</section>
+
+<section>
+  <h2 class="promises-title">Please know <em>this</em></h2>
+  <div class="promise-list" id="promiseList">
+    <div class="promise-item">
+      <span class="promise-num">01</span>
+      <p class="promise-text">I know I did something wrong, but please don't change the way you see me because of this. Please still love me the same, and please stay.</p>
+    </div>
+    <div class="promise-item">
+      <span class="promise-num">02</span>
+      <p class="promise-text">I promise I'll always communicate with you about my mistakes and take full responsibility for them.</p>
+    </div>
+    <div class="promise-item">
+      <span class="promise-num">03</span>
+      <p class="promise-text">Whatever you need right now, I'll respect it. If you want space or if you want me to step back for a while, I'll give that to you, because I care about what you feel.</p>
+    </div>
+    <div class="promise-item">
+      <span class="promise-num">04</span>
+      <p class="promise-text">I'll always be here whenever you need me. You can always come to me, and I'll be here waiting with the same love for you.</p>
+    </div>
+    <div class="promise-item">
+      <span class="promise-num">05</span>
+      <p class="promise-text">You are one of the reasons why I keep going every day. The thought of losing someone as important as you scares me a lot. You mean so much to me, more than I can properly put into words.</p>
+    </div>
+  </div>
+</section>
+
+<div class="closing">
+  <div class="divider" style="max-width:780px;margin:0 auto 4rem;">
+    <span></span>
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="#e8b4b8"><path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/></svg>
+    <span></span>
+  </div>
+  <h2>I love you, baby.<br><em>I forever will.</em></h2>
+  <p>I'm still here, loving you the same, hoping we can move past this together.</p>
+</div>
+
+<script>
+  const container = document.getElementById('petals');
+  for (let i = 0; i < 22; i++) {
+    const p = document.createElement('div');
+    p.className = 'petal';
+    p.style.left = Math.random() * 100 + 'vw';
+    p.style.animationDuration = (8 + Math.random() * 10) + 's';
+    p.style.animationDelay = (Math.random() * 12) + 's';
+    p.style.width = (8 + Math.random() * 10) + 'px';
+    p.style.height = (12 + Math.random() * 14) + 'px';
+    p.style.transform = `rotate(${Math.random() * 360}deg)`;
+    container.appendChild(p);
+  }
+
+  const items = document.querySelectorAll('.promise-item');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 120);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  items.forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
